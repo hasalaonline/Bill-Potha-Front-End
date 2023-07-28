@@ -1,3 +1,4 @@
+import 'package:billpotha/bills.dart';
 import 'analytics.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,65 @@ class HomePage extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<HomePage> {
+  void _handleMenuItemTap() {
+    setState(() {
+      // Update the state variables as needed
+      sample_text = "Working";
+    });
+  }
+
+  void _showMenu(BuildContext context) async {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
+    await showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(
+        screenWidth,
+        screenHeight / 8,
+        0,
+        0,
+      ),
+      items: <PopupMenuEntry>[
+        PopupMenuItem(
+          value: 1,
+          onTap: _handleMenuItemTap,
+          child: const Row(
+            children: [
+              Icon(Icons.exit_to_app),
+              SizedBox(
+                width: 10.0,
+              ),
+              Text(
+                'Sign Out',
+                style: TextStyle(
+                  fontSize: 20.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const PopupMenuItem(
+          value: 2,
+          child: Row(
+            children: [
+              Icon(Icons.settings),
+              SizedBox(
+                width: 10.0,
+              ),
+              Text(
+                'Settings',
+                style: TextStyle(
+                  fontSize: 20.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   int _selectedIndex = 0;
 
   Widget _buildContent() {
@@ -18,9 +78,7 @@ class _MyWidgetState extends State<HomePage> {
       case 1:
         return const AnalyticsPage();
       case 2:
-        return const Text('Profile Page');
-      case 3:
-        return const Text('Settings Page');
+        return const ViewBills();
       default:
         return const Text('Unknown Page');
     }
@@ -38,15 +96,15 @@ class _MyWidgetState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('බිල් පොත'),
         leading: IconButton(
-          icon: const Icon(Icons.language),
-          tooltip: 'Language options',
           onPressed: () {},
+          icon: const Icon(Icons.language),
         ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.more_vert),
-            tooltip: 'More options',
-            onPressed: () {},
+            onPressed: () {
+              _showMenu(context);
+            },
           ),
         ],
       ),
@@ -84,6 +142,8 @@ class _MyWidgetState extends State<HomePage> {
   }
 }
 
+String sample_text = "Test";
+
 class AddBillsPayments extends StatefulWidget {
   const AddBillsPayments({super.key});
 
@@ -94,11 +154,11 @@ class AddBillsPayments extends StatefulWidget {
 class _AddBillsPaymentsState extends State<AddBillsPayments> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Text(
-          'Add Bills and Payments',
-          style: TextStyle(fontSize: 24),
+          sample_text,
+          style: const TextStyle(fontSize: 24),
         ),
       ),
     );
