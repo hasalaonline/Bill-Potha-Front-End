@@ -1,21 +1,41 @@
+import 'package:billpotha/ceb_bill.dart';
+import 'package:billpotha/nwsdb_bill.dart';
 import 'package:flutter/material.dart';
-import 'home.dart';
 
-class AnalyticsPage extends StatefulWidget {
-  const AnalyticsPage({super.key});
+class AddBillsPayments extends StatefulWidget {
+  const AddBillsPayments({
+    super.key,
+  });
 
   @override
-  State<AnalyticsPage> createState() => _MyWidgetState();
+  State<AddBillsPayments> createState() => _AddBillsPaymentsState();
 }
 
-class _MyWidgetState extends State<AnalyticsPage> {
+class _AddBillsPaymentsState extends State<AddBillsPayments> {
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+        body: Center(
+      child: AddBills(),
+    ));
+  }
+}
+
+class AddBills extends StatefulWidget {
+  const AddBills({super.key});
+
+  @override
+  State<AddBills> createState() => _AddBillsState();
+}
+
+class _AddBillsState extends State<AddBills> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Analytics'),
+          title: const Text('Add Bills & Payments'),
           leading: IconButton(
             icon: const Icon(Icons.language),
             onPressed: () {},
@@ -34,7 +54,7 @@ class _MyWidgetState extends State<AnalyticsPage> {
             IconButton(
               icon: const Icon(Icons.more_vert),
               onPressed: () {
-                const SideMenu();
+                // _showMenu(context);
               },
             ),
           ],
@@ -42,16 +62,10 @@ class _MyWidgetState extends State<AnalyticsPage> {
         body: const TabBarView(
           children: [
             Center(
-              child: Text(
-                'Electricity',
-                style: TextStyle(fontSize: 24),
-              ),
+              child: CebBill(),
             ),
             Center(
-              child: Text(
-                'Water',
-                style: TextStyle(fontSize: 24),
-              ),
+              child: NwsdbBill(),
             ),
           ],
         ),
