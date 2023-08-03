@@ -1,5 +1,7 @@
+import 'package:billpotha/ceb_analyrics.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
+import 'nwsdb_analytics.dart';
 
 class AnalyticsPage extends StatefulWidget {
   const AnalyticsPage({super.key});
@@ -41,17 +43,11 @@ class _MyWidgetState extends State<AnalyticsPage> {
         ),
         body: const TabBarView(
           children: [
-            Center(
-              child: Text(
-                'Electricity',
-                style: TextStyle(fontSize: 24),
-              ),
+            SingleChildScrollView(
+              child: CebAnalytics(),
             ),
-            Center(
-              child: Text(
-                'Water',
-                style: TextStyle(fontSize: 24),
-              ),
+            SingleChildScrollView(
+              child: NwsdbAnalytics(),
             ),
           ],
         ),

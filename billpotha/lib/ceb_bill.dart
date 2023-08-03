@@ -1,5 +1,7 @@
+import 'package:billpotha/add_bills_payments.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'bill.dart';
 
 class CebBill extends StatefulWidget {
   const CebBill({super.key});
@@ -24,121 +26,222 @@ class _CebBillState extends State<CebBill> {
   final _formKey = GlobalKey<FormState>();
   String _units = '';
   String _amount = '';
+  String _payment = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            'Add CEB bill here',
-            style: TextStyle(fontSize: 24),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: _formKey,
-              child: Card(
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/ceb.png',
+              height: 100,
+              width: 100,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: cebBillForm(context),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Form cebBillForm(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(40),
+                ),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Units',
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter units';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _units = value!;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Amount',
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter amount';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _amount = value!;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      DropdownButtonFormField<String>(
-                        decoration: const InputDecoration(
-                          hintText: 'Month',
-                          border: OutlineInputBorder(),
-                        ),
-                        value: _selectedMonth,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedMonth = newValue!;
-                          });
-                        },
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Please select a month';
-                          }
-                          return null;
-                        },
-                        items: <String>[
-                          'January',
-                          'February',
-                          'March',
-                          'April',
-                          'May',
-                          'June',
-                          'July',
-                          'August',
-                          'September',
-                          'October',
-                          'November',
-                          'December'
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Processing Data'),
-                                ),
-                              );
-                            }
-                          },
-                          child: const Icon(Icons.add),
-                        ),
-                      ),
-                    ],
+                  padding: const EdgeInsets.all(13.0),
+                  child: DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(
+                      hintText: 'Month',
+                      border: InputBorder.none,
+                    ),
+                    value: _selectedMonth,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedMonth = newValue!;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Please select a month';
+                      }
+                      return null;
+                    },
+                    items: <String>[
+                      'January',
+                      'February',
+                      'March',
+                      'April',
+                      'May',
+                      'June',
+                      'July',
+                      'August',
+                      'September',
+                      'October',
+                      'November',
+                      'December'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
                 ),
               ),
-            ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(13.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Units',
+                      border: InputBorder.none,
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter units';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _units = value!;
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(13.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Amount',
+                      border: InputBorder.none,
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter amount';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _amount = value!;
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(13.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Payment',
+                      border: InputBorder.none,
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter payment';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _payment = value!;
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.deepPurpleAccent),
+                    iconColor: MaterialStateColor.resolveWith(
+                        (states) => Colors.white),
+                  ),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      addBill(
+                        _selectedMonth,
+                        int.parse(_units),
+                        double.parse(_amount),
+                        double.parse(_payment),
+                        'cebBillsDatabase',
+                      );
+
+                      print(getBills('cebBillsDatabase').length);
+                      print(getBills('cebBillsDatabase').length);
+
+                      for (var bill in getBills('cebBillsDatabase')) {
+                        print(bill.month);
+                        print(bill.units);
+                        print(bill.amount);
+                        print(bill.payment);
+                      }
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('processing data'),
+                        ),
+                      );
+                    }
+                  },
+                  child: const Icon(Icons.add),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

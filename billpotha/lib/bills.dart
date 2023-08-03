@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'ceb_bills.dart';
 
 class ViewBills extends StatefulWidget {
   const ViewBills({super.key});
@@ -39,15 +40,10 @@ class _ViewBillsState extends State<ViewBills> {
             ),
           ],
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-             Center(
-              child: Text(
-                'Electricity',
-                style: TextStyle(fontSize: 24),
-              ),
-            ),
-             Center(
+             BillsTable(),
+             const Center(
               child: Text(
                 'Water',
                 style: TextStyle(fontSize: 24),
