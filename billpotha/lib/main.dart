@@ -1,10 +1,9 @@
-import 'package:billpotha/signin.dart';
 import 'package:flutter/material.dart';
-import 'signup.dart';
-import 'home.dart';
+import 'pages/home.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'bill.dart';
+import 'models/bill.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter(); // Initialize Hive
@@ -55,11 +54,6 @@ class MyApp extends StatelessWidget {
         Locale('si'), // Sinhala
       ],
       home: const HomePage(),
-      routes: <String, WidgetBuilder>{
-        '/home': (BuildContext context) => const HomePage(),
-        '/signin': (BuildContext context) => SignIn(),
-        '/signup': (BuildContext context) => const SignUp(),
-      },
     );
   }
 }

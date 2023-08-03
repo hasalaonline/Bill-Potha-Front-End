@@ -1,16 +1,15 @@
-import 'package:billpotha/add_bills_payments.dart';
+import 'package:billpotha/widgets/add_bills_payments.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'bill.dart';
 
-class CebBill extends StatefulWidget {
-  const CebBill({super.key});
+class NwsdbBill extends StatefulWidget {
+  const NwsdbBill({super.key});
 
   @override
-  State<CebBill> createState() => _CebBillState();
+  State<NwsdbBill> createState() => _NwsdbBillState();
 }
 
-class _CebBillState extends State<CebBill> {
+class _NwsdbBillState extends State<NwsdbBill> {
   late String _selectedMonth;
 
   @override
@@ -35,13 +34,13 @@ class _CebBillState extends State<CebBill> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/ceb.png',
-              height: 100,
-              width: 100,
+              'assets/images/nwsdb.png',
+              height: 80,
+              width: 80,
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: cebBillForm(context),
+              child: nwsdbBillForm(context),
             ),
           ],
         ),
@@ -49,7 +48,7 @@ class _CebBillState extends State<CebBill> {
     );
   }
 
-  Form cebBillForm(BuildContext context) {
+  Form nwsdbBillForm(BuildContext context) {
     return Form(
       key: _formKey,
       child: Card(
@@ -216,22 +215,12 @@ class _CebBillState extends State<CebBill> {
                         int.parse(_units),
                         double.parse(_amount),
                         double.parse(_payment),
-                        'cebBillsDatabase',
+                        'nwsdbBillsDatabase',
                       );
-
-                      print(getBills('cebBillsDatabase').length);
-                      print(getBills('cebBillsDatabase').length);
-
-                      for (var bill in getBills('cebBillsDatabase')) {
-                        print(bill.month);
-                        print(bill.units);
-                        print(bill.amount);
-                        print(bill.payment);
-                      }
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('processing data'),
+                          content: Text('Data Added Successfully'),
                         ),
                       );
                     }

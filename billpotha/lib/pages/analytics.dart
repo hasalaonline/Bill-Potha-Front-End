@@ -1,25 +1,26 @@
+import 'package:billpotha/widgets/ceb_analytics.dart';
 import 'package:flutter/material.dart';
-import 'ceb_bills.dart';
+import 'home.dart';
+import '../widgets/nwsdb_analytics.dart';
 
-class ViewBills extends StatefulWidget {
-  const ViewBills({super.key});
+class AnalyticsPage extends StatefulWidget {
+  const AnalyticsPage({super.key});
 
   @override
-  State<ViewBills> createState() => _ViewBillsState();
+  State<AnalyticsPage> createState() => _MyWidgetState();
 }
 
-class _ViewBillsState extends State<ViewBills> {
+class _MyWidgetState extends State<AnalyticsPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Bills & Payments'),
+          title: const Text('Analytics'),
           leading: IconButton(
             icon: const Icon(Icons.language),
-            onPressed: () {
-            },
+            onPressed: () {},
           ),
           bottom: const TabBar(
             tabs: [
@@ -35,19 +36,18 @@ class _ViewBillsState extends State<ViewBills> {
             IconButton(
               icon: const Icon(Icons.more_vert),
               onPressed: () {
-                // _showMenu(context);
+                const SideMenu();
               },
             ),
           ],
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
-             BillsTable(),
-             const Center(
-              child: Text(
-                'Water',
-                style: TextStyle(fontSize: 24),
-              ),
+            SingleChildScrollView(
+              child: CebAnalytics(),
+            ),
+            SingleChildScrollView(
+              child: NwsdbAnalytics(),
             ),
           ],
         ),

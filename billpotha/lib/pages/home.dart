@@ -1,7 +1,7 @@
-import 'package:billpotha/bills.dart';
+import 'package:billpotha/pages/bills.dart';
 import 'analytics.dart';
 import 'package:flutter/material.dart';
-import 'add_bills_payments.dart';
+import '../widgets/add_bills_payments.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
