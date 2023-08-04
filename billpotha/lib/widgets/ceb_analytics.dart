@@ -1,31 +1,54 @@
 import 'package:flutter/material.dart';
+import '../functions/analytics.dart';
+import '../bar graph/bar_graph.dart';
 
-class CebAnalytics extends StatelessWidget {
+class CebAnalytics extends StatefulWidget {
   const CebAnalytics({super.key});
 
+  @override
+  State<CebAnalytics> createState() => _CebAnalyticsState();
+}
+
+class _CebAnalyticsState extends State<CebAnalytics> {
+  final int _averageConsumption = averageConsumption('cebBillsDatabase');
+  final double _averageExpenditure = averageExpense('cebBillsDatabase');
+  final String _averageExpense =
+      averageExpense('cebBillsDatabase').toStringAsFixed(2);
+  final int _highestMonthlyConsumption = highestConsumption('cebBillsDatabase');
+  final String _highestMonthlyConsumptionMonth =
+      highestConsumptionMonth('cebBillsDatabase');
+  final double _highestMonthlyExpenditure = highestExpense('cebBillsDatabase');
+  final String _highestMonthlyExpenditureMonth =
+      highestExpenseMonth('cebBillsDatabase');
+  final double _totalExpenditure = totalExpense('cebBillsDatabase');
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Row(
+        Image.asset(
+          'assets/images/ceb.png',
+          height: 80,
+          width: 80,
+        ),
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Card(
                   color: Colors.deepPurpleAccent,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        Text(
+                        const Text(
                           'Average',
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
                           ),
                         ),
-                        Text(
+                        const Text(
                           'Consumption',
                           style: TextStyle(
                             fontSize: 20,
@@ -34,10 +57,10 @@ class CebAnalytics extends StatelessWidget {
                         ),
                         Card(
                             child: Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            '103',
-                            style: TextStyle(
+                            _averageConsumption.toStringAsFixed(2),
+                            style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -48,21 +71,21 @@ class CebAnalytics extends StatelessWidget {
                   )),
             ),
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Card(
                   color: Colors.deepPurpleAccent,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        Text(
+                        const Text(
                           'Average',
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
                           ),
                         ),
-                        Text(
+                        const Text(
                           'Expenditure',
                           style: TextStyle(
                             fontSize: 20,
@@ -71,10 +94,10 @@ class CebAnalytics extends StatelessWidget {
                         ),
                         Card(
                             child: Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Rs. 4,000',
-                            style: TextStyle(
+                            'Rs. $_averageExpenditure',
+                            style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -87,22 +110,23 @@ class CebAnalytics extends StatelessWidget {
           ],
         ),
         const Text('Comsumption Analysis', style: TextStyle(fontSize: 24)),
-        Image.asset('assets/comsumption.png'),
-        const Card(
+         const BarGraph(billDatabase: 'cebBillsDatabase',),
+        Card(
           color: Colors.deepPurpleAccent,
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Text('Highest Monthly Comsumption',
+                const Text('Highest Monthly Comsumption',
                     style: TextStyle(fontSize: 24, color: Colors.white)),
-                Text('June',
-                    style: TextStyle(fontSize: 24, color: Colors.yellowAccent)),
+                Text(_highestMonthlyConsumptionMonth,
+                    style: const TextStyle(
+                        fontSize: 24, color: Colors.yellowAccent)),
                 Card(
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('116',
-                        style: TextStyle(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(_highestMonthlyConsumption.toString(),
+                        style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                   ),
                 ),
@@ -113,21 +137,22 @@ class CebAnalytics extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        const Card(
+        Card(
           color: Colors.deepPurpleAccent,
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Text('Highest Monthly Expenditure',
+                const Text('Highest Monthly Expenditure',
                     style: TextStyle(fontSize: 24, color: Colors.white)),
-                Text('June',
-                    style: TextStyle(fontSize: 24, color: Colors.yellowAccent)),
+                Text(_highestMonthlyExpenditureMonth,
+                    style: const TextStyle(
+                        fontSize: 24, color: Colors.yellowAccent)),
                 Card(
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Rs. 4,500',
-                        style: TextStyle(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Rs. $_averageExpense',
+                        style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                   ),
                 ),
@@ -138,21 +163,21 @@ class CebAnalytics extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        const Card(
+        Card(
           color: Colors.deepPurpleAccent,
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Text('Total Expenditure',
+                const Text('Total Expenditure',
                     style: TextStyle(fontSize: 24, color: Colors.white)),
-                Text('2023',
+                const Text('2023',
                     style: TextStyle(fontSize: 24, color: Colors.yellowAccent)),
                 Card(
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Rs. 40,000',
-                        style: TextStyle(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Rs. $_totalExpenditure',
+                        style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                   ),
                 ),

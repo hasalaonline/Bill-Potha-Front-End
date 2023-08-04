@@ -1,6 +1,6 @@
-import 'package:billpotha/widgets/add_bills_payments.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../functions/bill_handling.dart';
 
 class CebBill extends StatefulWidget {
   const CebBill({super.key});
@@ -228,6 +228,12 @@ class _CebBillState extends State<CebBill> {
                   child: const Icon(Icons.add),
                 ),
               ),
+              ElevatedButton(
+                  onPressed: () {
+                    clearBills('cebBillsDatabase');
+                    initializeBillDatabase('cebBillsDatabase');
+                  },
+                  child: Text('reset'))
             ],
           ),
         ),

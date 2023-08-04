@@ -1,31 +1,55 @@
+import 'package:billpotha/bar%20graph/bar_graph.dart';
 import 'package:flutter/material.dart';
+import 'package:billpotha/functions/analytics.dart';
 
-class NwsdbAnalytics extends StatelessWidget {
+class NwsdbAnalytics extends StatefulWidget {
   const NwsdbAnalytics({super.key});
 
+  @override
+  State<NwsdbAnalytics> createState() => _NwsdbAnalyticsState();
+}
+
+class _NwsdbAnalyticsState extends State<NwsdbAnalytics> {
+  final int _averageConsumption = averageConsumption('nwsdbBillsDatabase');
+  final String _averageExpenditure =
+      averageExpense('nwsdbBillsDatabase').toStringAsFixed(2);
+  final int _highestMonthlyConsumption =
+      highestConsumption('nwsdbBillsDatabase');
+  final String _highestMonthlyConsumptionMonth =
+      highestConsumptionMonth('nwsdbBillsDatabase');
+  final double _highestMonthlyExpenditure =
+      highestExpense('nwsdbBillsDatabase');
+  final String _highestMonthlyExpenditureMonth =
+      highestExpenseMonth('nwsdbBillsDatabase');
+  final double _totalExpenditure = totalExpense('nwsdbBillsDatabase');
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Row(
+        Image.asset(
+              'assets/images/nwsdb.png',
+              height: 80,
+              width: 80,
+            ),
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Card(
                   color: Colors.deepPurpleAccent,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        Text(
+                        const Text(
                           'Average',
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
                           ),
                         ),
-                        Text(
+                        const Text(
                           'Consumption',
                           style: TextStyle(
                             fontSize: 20,
@@ -34,10 +58,10 @@ class NwsdbAnalytics extends StatelessWidget {
                         ),
                         Card(
                             child: Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            '103',
-                            style: TextStyle(
+                            '$_averageConsumption',
+                            style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -48,21 +72,21 @@ class NwsdbAnalytics extends StatelessWidget {
                   )),
             ),
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Card(
                   color: Colors.deepPurpleAccent,
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        Text(
+                        const Text(
                           'Average',
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
                           ),
                         ),
-                        Text(
+                        const Text(
                           'Expenditure',
                           style: TextStyle(
                             fontSize: 20,
@@ -71,10 +95,10 @@ class NwsdbAnalytics extends StatelessWidget {
                         ),
                         Card(
                             child: Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Rs. 4,000',
-                            style: TextStyle(
+                            'Rs. $_averageExpenditure',
+                            style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -87,22 +111,25 @@ class NwsdbAnalytics extends StatelessWidget {
           ],
         ),
         const Text('Comsumption Analysis', style: TextStyle(fontSize: 24)),
-        Image.asset('assets/comsumption.png'),
-        const Card(
+        const BarGraph(
+          billDatabase: 'nwsdbBillsDatabase',
+        ),
+        Card(
           color: Colors.deepPurpleAccent,
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Text('Highest Monthly Comsumption',
+                const Text('Highest Monthly Comsumption',
                     style: TextStyle(fontSize: 24, color: Colors.white)),
-                Text('June',
-                    style: TextStyle(fontSize: 24, color: Colors.yellowAccent)),
+                Text(_highestMonthlyConsumptionMonth,
+                    style: const TextStyle(
+                        fontSize: 24, color: Colors.yellowAccent)),
                 Card(
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('116',
-                        style: TextStyle(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('$_highestMonthlyConsumption',
+                        style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                   ),
                 ),
@@ -113,21 +140,22 @@ class NwsdbAnalytics extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        const Card(
+        Card(
           color: Colors.deepPurpleAccent,
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Text('Highest Monthly Expenditure',
+                const Text('Highest Monthly Expenditure',
                     style: TextStyle(fontSize: 24, color: Colors.white)),
-                Text('June',
-                    style: TextStyle(fontSize: 24, color: Colors.yellowAccent)),
+                Text(_highestMonthlyExpenditureMonth,
+                    style: const TextStyle(
+                        fontSize: 24, color: Colors.yellowAccent)),
                 Card(
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Rs. 4,500',
-                        style: TextStyle(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Rs. $_highestMonthlyExpenditure',
+                        style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                   ),
                 ),
@@ -138,21 +166,21 @@ class NwsdbAnalytics extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        const Card(
+        Card(
           color: Colors.deepPurpleAccent,
           child: Padding(
             padding: EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Text('Total Expenditure',
+                const Text('Total Expenditure',
                     style: TextStyle(fontSize: 24, color: Colors.white)),
-                Text('2023',
+                const Text('2023',
                     style: TextStyle(fontSize: 24, color: Colors.yellowAccent)),
                 Card(
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Rs. 40,000',
-                        style: TextStyle(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Rs. $_totalExpenditure',
+                        style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                   ),
                 ),

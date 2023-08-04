@@ -3,13 +3,23 @@ import 'pages/home.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'models/bill.dart';
+import '../functions/bill_handling.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter(); // Initialize Hive
   Hive.registerAdapter(BillAdapter());
+
   await Hive.openBox('cebBillsDatabase');
   await Hive.openBox('nwsdbBillsDatabase');
+  
+  if (Hive.box('cebBillsDatabase').isEmpty) {
+    await initializeBillDatabase('cebBillsDatabase');
+  }
+
+  if (Hive.box('nwsdbBillsDatabase').isEmpty) {
+    await initializeBillDatabase('nwsdbBillsDatabase');
+  }
   runApp(const MyApp());
 }
 
