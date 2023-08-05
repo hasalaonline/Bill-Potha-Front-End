@@ -1,3 +1,6 @@
+import 'package:billpotha/functions/analytics.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../models/bill.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -36,6 +39,14 @@ void addBill(String month, int units, double amount, double payment,
     }
     j++;
   }
+  String _currentBalance = '';
+  void fetchCurrentBalance() async {
+      _currentBalance = await currentBalance('electricityBalance');
+    }
+    fetchCurrentBalance();
+    double _newBalance = await double.parse(_currentBalance) - payment;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('electricityBalance', _newBalance.toString());
   await billBox.add(bill);
 }
 

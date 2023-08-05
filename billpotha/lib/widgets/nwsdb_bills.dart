@@ -3,13 +3,16 @@ import '../models/bill.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class NwsdbBillsTable extends StatelessWidget {
+  const NwsdbBillsTable({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     var billsBox = Hive.box('nwsdbBillsDatabase');
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
               'assets/images/nwsdb.png',
@@ -17,21 +20,31 @@ class NwsdbBillsTable extends StatelessWidget {
               width: 80,
             ),
             DataTable(
-              columns: const [
-                DataColumn(label: Text('Month')),
-                DataColumn(label: Text('Units')),
-                DataColumn(label: Text('Amount')),
-                DataColumn(label: Text('Paid')),
+              horizontalMargin: screenWidth * 0.07,
+              columnSpacing: screenWidth * 0.06,
+              columns: [
+                DataColumn(
+                  label: columTitle('Month'),
+                ),
+                DataColumn(
+                  label: columTitle('Units'),
+                ),
+                DataColumn(
+                  label: columTitle('Amount'),
+                ),
+                DataColumn(
+                  label: columTitle('Paid'),
+                ),
               ],
               rows: List<DataRow>.generate(
                 billsBox.length,
                 (index) {
                   var bill = billsBox.getAt(index) as Bill;
                   return DataRow(cells: [
-                    DataCell(Text(bill.month)),
-                    DataCell(Text(bill.units.toString())),
-                    DataCell(Text(bill.amount.toString())),
-                    DataCell(Text(bill.payment.toString())),
+                    DataCell(cellValue(bill.month)),
+                    DataCell(Center(child: cellValue(bill.units.toString()))),
+                    DataCell(Center(child: cellValue(bill.amount.toString()))),
+                    DataCell(Center(child: cellValue(bill.payment.toString()))),
                   ]);
                 },
               ),
@@ -41,4 +54,30 @@ class NwsdbBillsTable extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget columTitle(String title) {
+  return Card(
+      color: Colors.deepPurple,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          title,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+      ));
+}
+
+Widget cellValue(String value) {
+  return Text(
+    value,
+    style: const TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
+  );
 }

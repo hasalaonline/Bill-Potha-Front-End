@@ -41,7 +41,7 @@ class _ViewBillsState extends State<ViewBills> {
             ),
           ],
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
              BillsTable(),
              NwsdbBillsTable()

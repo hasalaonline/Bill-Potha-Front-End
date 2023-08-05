@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'pages/home.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'models/bill.dart';
 import '../functions/bill_handling.dart';
-
+import '../pages/welcome.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter(); // Initialize Hive
@@ -12,7 +11,7 @@ Future<void> main() async {
 
   await Hive.openBox('cebBillsDatabase');
   await Hive.openBox('nwsdbBillsDatabase');
-  
+
   if (Hive.box('cebBillsDatabase').isEmpty) {
     await initializeBillDatabase('cebBillsDatabase');
   }
@@ -54,16 +53,21 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'), // English
-        Locale('si'), // Sinhala
-      ],
-      home: const HomePage(),
+      home: FutureBuilder<bool>(
+        future: checkFirstTimeUser(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data!) {
+              return const WelcomePage();
+            } else {
+              return const HomePage();
+            }
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
 }
+

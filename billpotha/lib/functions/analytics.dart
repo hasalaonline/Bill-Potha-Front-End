@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'bill_handling.dart';
 import '../models/bill.dart';
 
@@ -75,10 +77,38 @@ String highestExpenseMonth(String billDatabase) {
   return highestMonth;
 }
 
-double totalExpense(String billDatabase) {
+List totalConsumption(String billDatabase) {
   double totalAmount = 0;
+  double totalUnits = 0;
   for (Bill i in getBills(billDatabase)) {
     totalAmount += i.amount;
   }
-  return totalAmount;
+
+  for (Bill i in getBills(billDatabase)) {
+    totalUnits += i.units;
+  }
+  return [totalAmount, totalUnits];
+}
+
+List lastBill(String billDatabase) {
+  for (var i = getBills(billDatabase).length - 1; i >= 0; i--) {
+    if (getBills(billDatabase)[i].units != 0) {
+      return [
+        getBills(billDatabase)[i].units,
+        getBills(billDatabase)[i].amount
+      ];
+    }
+  }
+  double lastAmount =
+      getBills(billDatabase)[getBills(billDatabase).length - 1].amount;
+  int lastUnits =
+      getBills(billDatabase)[getBills(billDatabase).length - 1].units;
+  return [lastAmount, lastUnits];
+}
+
+Future<String> currentBalance(String service) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? currentBalanceStr = prefs.getString(service);
+
+  return currentBalanceStr!;
 }

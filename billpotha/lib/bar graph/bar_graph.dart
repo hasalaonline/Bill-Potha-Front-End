@@ -38,7 +38,7 @@ class BarGraph extends StatelessWidget {
       child: BarChart(
         BarChartData(
           minY: 0,
-          maxY: 400,
+          maxY: 200,
           gridData: const FlGridData(show: false),
           barGroups: myBarData.barData
               .map(
@@ -47,7 +47,7 @@ class BarGraph extends StatelessWidget {
                   barRods: [
                     BarChartRodData(
                       toY: data.y,
-                      color: Colors.deepPurpleAccent,
+                      color: Colors.deepPurple,
                       width: 20,
                       borderRadius: const BorderRadius.all(
                         Radius.circular(4),

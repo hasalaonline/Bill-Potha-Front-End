@@ -202,8 +202,8 @@ class _CebBillState extends State<CebBill> {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.deepPurpleAccent),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.deepPurple),
                     iconColor: MaterialStateColor.resolveWith(
                         (states) => Colors.white),
                   ),
@@ -228,12 +228,12 @@ class _CebBillState extends State<CebBill> {
                   child: const Icon(Icons.add),
                 ),
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    clearBills('cebBillsDatabase');
-                    initializeBillDatabase('cebBillsDatabase');
-                  },
-                  child: Text('reset'))
+              // ElevatedButton(
+              //     onPressed: () {
+              //       clearBills('cebBillsDatabase');
+              //       initializeBillDatabase('cebBillsDatabase');
+              //     },
+              //     child: Text('reset'))
             ],
           ),
         ),

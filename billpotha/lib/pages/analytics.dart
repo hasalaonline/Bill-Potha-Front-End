@@ -1,6 +1,5 @@
 import 'package:billpotha/widgets/ceb_analytics.dart';
 import 'package:flutter/material.dart';
-import 'home.dart';
 import '../widgets/nwsdb_analytics.dart';
 
 class AnalyticsPage extends StatefulWidget {
@@ -36,7 +35,7 @@ class _MyWidgetState extends State<AnalyticsPage> {
             IconButton(
               icon: const Icon(Icons.more_vert),
               onPressed: () {
-                const SideMenu();
+                
               },
             ),
           ],
