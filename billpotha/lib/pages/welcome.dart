@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'home.dart';
 
@@ -18,19 +19,20 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.deepPurple[50],
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Center(
+             Center(
                 child: Card(
               color: Colors.deepPurple,
               child: Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
                   'Welcome to බිල් පොත',
-                  style: TextStyle(
+                  style: GoogleFonts.ubuntu(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     color: Colors.white,
@@ -39,9 +41,13 @@ class _WelcomePageState extends State<WelcomePage> {
               ),
             )),
             const SizedBox(height: 16),
-            Card(
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(40),
+              ),
               child: Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
                     Container(
@@ -52,11 +58,16 @@ class _WelcomePageState extends State<WelcomePage> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
+                          style: GoogleFonts.ubuntu(
+                            fontSize: 20,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
                           controller: _electricityBalanceInputController,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText:
-                                'Enter your currennt electricity bill balance',
+                                'Enter your current electricity bill balance',
                           ),
                         ),
                       ),
@@ -70,10 +81,15 @@ class _WelcomePageState extends State<WelcomePage> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
+                          style: GoogleFonts.ubuntu(
+                            fontSize: 20,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
                           controller: _waterBalanceInputController,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
-                            hintText: 'Enter your currennt water bill balance',
+                            hintText: 'Enter your current water bill balance',
                           ),
                         ),
                       ),
@@ -90,9 +106,9 @@ class _WelcomePageState extends State<WelcomePage> {
               onPressed: () {
                 saveUserInput();
               },
-              child: const Text(
+              child: Text(
                 'Start',
-                style: TextStyle(color: Colors.white),
+                style: GoogleFonts.ubuntu(color: Colors.white),
               ),
             ),
           ],

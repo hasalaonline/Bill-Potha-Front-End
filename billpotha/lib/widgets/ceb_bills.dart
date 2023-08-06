@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/bill.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -10,15 +11,12 @@ class BillsTable extends StatelessWidget {
     var billsBox = Hive.box('cebBillsDatabase');
 
     return Scaffold(
+      backgroundColor: Colors.deepPurple[50],
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/ceb.png',
-              height: 80,
-              width: 80,
-            ),
+            const SizedBox(height: 16),
             DataTable(
               horizontalMargin: screenWidth * 0.07,
               columnSpacing: screenWidth * 0.06,
@@ -40,12 +38,16 @@ class BillsTable extends StatelessWidget {
                 billsBox.length,
                 (index) {
                   var bill = billsBox.getAt(index) as Bill;
-                  return DataRow(cells: [
-                    DataCell(cellValue(bill.month)),
-                    DataCell(Center(child: cellValue(bill.units.toString()))),
-                    DataCell(Center(child: cellValue(bill.amount.toString()))),
-                    DataCell(Center(child: cellValue(bill.payment.toString()))),
-                  ]);
+                  return DataRow(
+                    cells: [
+                      DataCell(cellValue(bill.month)),
+                      DataCell(Center(child: cellValue(bill.units.toString()))),
+                      DataCell(
+                          Center(child: cellValue(bill.amount.toString()))),
+                      DataCell(
+                          Center(child: cellValue(bill.payment.toString()))),
+                    ],
+                  );
                 },
               ),
             ),
@@ -57,14 +59,17 @@ class BillsTable extends StatelessWidget {
 }
 
 Widget columTitle(String title) {
-  return Card(
-      color: Colors.deepPurple,
+  return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(40),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Text(
           title,
-          style: const TextStyle(
-            color: Colors.white,
+          style: GoogleFonts.ubuntu(
+            color: Colors.blueGrey,
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
@@ -75,7 +80,7 @@ Widget columTitle(String title) {
 Widget cellValue(String value) {
   return Text(
     value,
-    style: const TextStyle(
+    style: GoogleFonts.ubuntu(
       fontSize: 16,
       fontWeight: FontWeight.bold,
     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../functions/bill_handling.dart';
 
@@ -29,15 +30,12 @@ class _CebBillState extends State<CebBill> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.deepPurple[50],
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/ceb.png',
-              height: 80,
-              width: 80,
-            ),
+            const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: cebBillForm(context),
@@ -51,7 +49,11 @@ class _CebBillState extends State<CebBill> {
   Form cebBillForm(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Card(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(40),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -102,7 +104,8 @@ class _CebBillState extends State<CebBill> {
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(value,
+                            style: GoogleFonts.ubuntu(fontSize: 18)),
                       );
                     }).toList(),
                   ),
@@ -122,6 +125,7 @@ class _CebBillState extends State<CebBill> {
                 child: Padding(
                   padding: const EdgeInsets.all(13.0),
                   child: TextFormField(
+                    style: GoogleFonts.ubuntu(fontSize: 18),
                     decoration: const InputDecoration(
                       hintText: 'Units',
                       border: InputBorder.none,
@@ -152,6 +156,7 @@ class _CebBillState extends State<CebBill> {
                 child: Padding(
                   padding: const EdgeInsets.all(13.0),
                   child: TextFormField(
+                    style: GoogleFonts.ubuntu(fontSize: 18),
                     decoration: const InputDecoration(
                       hintText: 'Amount',
                       border: InputBorder.none,
@@ -182,6 +187,7 @@ class _CebBillState extends State<CebBill> {
                 child: Padding(
                   padding: const EdgeInsets.all(13.0),
                   child: TextFormField(
+                    style: GoogleFonts.ubuntu(fontSize: 18),
                     decoration: const InputDecoration(
                       hintText: 'Payment',
                       border: InputBorder.none,
@@ -216,6 +222,7 @@ class _CebBillState extends State<CebBill> {
                         double.parse(_amount),
                         double.parse(_payment),
                         'cebBillsDatabase',
+                        'electricityBalance',
                       );
 
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -223,6 +230,10 @@ class _CebBillState extends State<CebBill> {
                           content: Text('Data Added Successfully'),
                         ),
                       );
+
+                      setState(() {
+                        _formKey.currentState!.reset();
+                      });
                     }
                   },
                   child: const Icon(Icons.add),

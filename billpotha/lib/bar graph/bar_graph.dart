@@ -40,6 +40,13 @@ class BarGraph extends StatelessWidget {
           minY: 0,
           maxY: 200,
           gridData: const FlGridData(show: false),
+          borderData: FlBorderData(show: false),
+          titlesData: const FlTitlesData(
+            show: true,
+            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          ),
           barGroups: myBarData.barData
               .map(
                 (data) => BarChartGroupData(
@@ -50,7 +57,12 @@ class BarGraph extends StatelessWidget {
                       color: Colors.deepPurple,
                       width: 20,
                       borderRadius: const BorderRadius.all(
-                        Radius.circular(4),
+                        Radius.circular(40),
+                      ),
+                      backDrawRodData: BackgroundBarChartRodData(
+                        show: true,
+                        toY: 200,
+                        color: Colors.grey[200],
                       ),
                     ),
                   ],

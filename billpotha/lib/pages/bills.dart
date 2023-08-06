@@ -1,6 +1,7 @@
 import 'package:billpotha/widgets/nwsdb_bills.dart';
 import 'package:flutter/material.dart';
 import '../widgets/ceb_bills.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ViewBills extends StatefulWidget {
   const ViewBills({super.key});
@@ -16,19 +17,26 @@ class _ViewBillsState extends State<ViewBills> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Bills & Payments'),
+          title: Center(
+              child: Text(
+            'Bills & Payments',
+            style: GoogleFonts.ubuntu(
+                fontWeight: FontWeight.bold, color: Colors.black),
+          )),
           leading: IconButton(
             icon: const Icon(Icons.language),
-            onPressed: () {
-            },
+            onPressed: () {},
           ),
-          bottom: const TabBar(
+          bottom: TabBar(
             tabs: [
               Tab(
-                icon: Icon(Icons.flash_on),
+                icon: Image.asset('assets/images/ceb.png'),
               ),
               Tab(
-                icon: Icon(Icons.water_rounded),
+                icon: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Image.asset('assets/images/nwsdb.png'),
+                ),
               ),
             ],
           ),
@@ -42,10 +50,7 @@ class _ViewBillsState extends State<ViewBills> {
           ],
         ),
         body: const TabBarView(
-          children: [
-             BillsTable(),
-             NwsdbBillsTable()
-          ],
+          children: [BillsTable(), NwsdbBillsTable()],
         ),
       ),
     );

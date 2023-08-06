@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../functions/bill_handling.dart';
 
@@ -29,18 +30,15 @@ class _NwsdbBillState extends State<NwsdbBill> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.deepPurple[50],
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/nwsdb.png',
-              height: 80,
-              width: 80,
-            ),
+            const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: nwsdbBillForm(context),
+              child: cebBillForm(context),
             ),
           ],
         ),
@@ -48,10 +46,14 @@ class _NwsdbBillState extends State<NwsdbBill> {
     );
   }
 
-  Form nwsdbBillForm(BuildContext context) {
+  Form cebBillForm(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Card(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(40),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -102,7 +104,8 @@ class _NwsdbBillState extends State<NwsdbBill> {
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(value,
+                            style: GoogleFonts.ubuntu(fontSize: 18)),
                       );
                     }).toList(),
                   ),
@@ -122,6 +125,7 @@ class _NwsdbBillState extends State<NwsdbBill> {
                 child: Padding(
                   padding: const EdgeInsets.all(13.0),
                   child: TextFormField(
+                    style: GoogleFonts.ubuntu(fontSize: 18),
                     decoration: const InputDecoration(
                       hintText: 'Units',
                       border: InputBorder.none,
@@ -152,6 +156,7 @@ class _NwsdbBillState extends State<NwsdbBill> {
                 child: Padding(
                   padding: const EdgeInsets.all(13.0),
                   child: TextFormField(
+                    style: GoogleFonts.ubuntu(fontSize: 18),
                     decoration: const InputDecoration(
                       hintText: 'Amount',
                       border: InputBorder.none,
@@ -182,6 +187,7 @@ class _NwsdbBillState extends State<NwsdbBill> {
                 child: Padding(
                   padding: const EdgeInsets.all(13.0),
                   child: TextFormField(
+                    style: GoogleFonts.ubuntu(fontSize: 18),
                     decoration: const InputDecoration(
                       hintText: 'Payment',
                       border: InputBorder.none,
@@ -202,8 +208,8 @@ class _NwsdbBillState extends State<NwsdbBill> {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.deepPurpleAccent),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.deepPurple),
                     iconColor: MaterialStateColor.resolveWith(
                         (states) => Colors.white),
                   ),
@@ -216,6 +222,7 @@ class _NwsdbBillState extends State<NwsdbBill> {
                         double.parse(_amount),
                         double.parse(_payment),
                         'nwsdbBillsDatabase',
+                        'waterBalance',
                       );
 
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -223,11 +230,21 @@ class _NwsdbBillState extends State<NwsdbBill> {
                           content: Text('Data Added Successfully'),
                         ),
                       );
+
+                      setState(() {
+                        _formKey.currentState!.reset();
+                      });
                     }
                   },
                   child: const Icon(Icons.add),
                 ),
               ),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       clearBills('cebBillsDatabase');
+              //       initializeBillDatabase('cebBillsDatabase');
+              //     },
+              //     child: Text('reset'))
             ],
           ),
         ),

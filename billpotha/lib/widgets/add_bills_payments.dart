@@ -1,6 +1,7 @@
 import 'package:billpotha/widgets/ceb_bill_form.dart';
 import 'package:billpotha/widgets/nwsdb_bill_form.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AddBillsPayments extends StatefulWidget {
   const AddBillsPayments({
@@ -35,18 +36,25 @@ class _AddBillsState extends State<AddBills> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Add Bills & Payments'),
+          title: Center(
+              child: Text(
+            'Add Bills & Payments',
+            style: GoogleFonts.ubuntu(fontWeight: FontWeight.bold),
+          )),
           leading: IconButton(
             icon: const Icon(Icons.language),
             onPressed: () {},
           ),
-          bottom: const TabBar(
+          bottom: TabBar(
             tabs: [
               Tab(
-                icon: Icon(Icons.flash_on),
+                icon: Image.asset('assets/images/ceb.png'),
               ),
               Tab(
-                icon: Icon(Icons.water_rounded),
+                icon: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Image.asset('assets/images/nwsdb.png'),
+                ),
               ),
             ],
           ),
@@ -73,4 +81,3 @@ class _AddBillsState extends State<AddBills> {
     );
   }
 }
-

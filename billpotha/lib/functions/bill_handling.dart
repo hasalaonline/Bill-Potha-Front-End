@@ -28,25 +28,47 @@ Future<void> initializeBillDatabase(String billDatabase) async {
 }
 
 void addBill(String month, int units, double amount, double payment,
-    String billDatabase) async {
+    String billDatabase, String currentBalanceSharedPref) async {
   int j = 0;
   final billBox = Hive.box(billDatabase);
   final bill = Bill(month, units, amount, payment);
   for (Bill i in getBills(billDatabase)) {
     if (i.month == month) {
       await billBox.putAt(j, bill);
+
+      // Await the result of fetchCurrentBalance
+      String _currentBalance = await fetchCurrentBalance(currentBalanceSharedPref);
+      double currentBalanceD = double.parse(_currentBalance);
+
+      if (payment == 0) {
+        currentBalanceD += amount;
+      } else {
+        if (payment < amount) {
+          double diff = amount - payment;
+          currentBalanceD += diff;
+        } else {
+          if (payment > amount) {
+            double diff = payment - amount;
+            if (currentBalanceD > diff) {
+              currentBalanceD -= diff;
+            } else {
+              diff -= currentBalanceD;
+              currentBalanceD = 0;
+            }
+          } else {
+            if (currentBalanceD > 0) {
+              currentBalanceD = currentBalanceD;
+            }
+          }
+        }
+      }
+      double _newBalance = currentBalanceD;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString(currentBalanceSharedPref, _newBalance.toString());
       return;
     }
     j++;
   }
-  String _currentBalance = '';
-  void fetchCurrentBalance() async {
-      _currentBalance = await currentBalance('electricityBalance');
-    }
-    fetchCurrentBalance();
-    double _newBalance = await double.parse(_currentBalance) - payment;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('electricityBalance', _newBalance.toString());
   await billBox.add(bill);
 }
 
@@ -66,4 +88,10 @@ void clearBills(String billDatabase) async {
   final billBox = Hive.box(billDatabase);
   await billBox.clear();
   initializeBillDatabase(billDatabase);
+}
+
+Future<String> fetchCurrentBalance(String service) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? currentBalanceStr = prefs.getString(service);
+  return currentBalanceStr ?? '';
 }
