@@ -25,7 +25,7 @@ class _WelcomePageState extends State<WelcomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             Center(
+            Center(
                 child: Card(
               color: Colors.deepPurple,
               child: Padding(
@@ -44,7 +44,7 @@ class _WelcomePageState extends State<WelcomePage> {
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(40),
+                borderRadius: BorderRadius.circular(10),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -53,7 +53,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(40),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -76,7 +76,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(40),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -108,7 +108,10 @@ class _WelcomePageState extends State<WelcomePage> {
               },
               child: Text(
                 'Start',
-                style: GoogleFonts.ubuntu(color: Colors.white),
+                style: GoogleFonts.ubuntu(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ],
